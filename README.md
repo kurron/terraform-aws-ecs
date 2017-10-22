@@ -1,7 +1,5 @@
 # Overview
-This Terraform module creates EC2 instances into the provided subnets.
-The subnet defaults will determine if the instances get public ip address
-or not.  The instances are pulled from the Spot Market.
+This Terraform module creates an ECS cluster backed by Spot instances.
 
 # Prerequisites
 * [Terraform](https://terraform.io/) installed and working
