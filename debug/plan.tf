@@ -39,6 +39,15 @@ data "terraform_remote_state" "iam" {
     }
 }
 
+data "terraform_remote_state" "alb" {
+    backend = "s3"
+    config {
+        bucket = "transparent-test-terraform-state"
+        key    = "us-west-2/debug/compute/alb/terraform.tfstate"
+        region = "us-east-1"
+    }
+}
+
 module "ecs" {
     source = "../"
 
@@ -62,9 +71,23 @@ module "ecs" {
     cooldown                         = "90"
     health_check_grace_period        = "300"
     subnet_ids                       = "${data.terraform_remote_state.vpc.public_subnet_ids}"
-    scale_down_cron                  = "0 7 * * MON-FRI"
+    scale_down_cron                  = "0 7 * * SUN-SAT"
     scale_up_cron                    = "0 0 * * MON-FRI"
     cluster_scaled_down_min_size     = "0"
     cluster_scaled_down_desired_size = "0"
     cluster_scaled_down_max_size     = "0"
+
+    port                           = "80"
+    protocol                       = "HTTP"
+    vpc_id                         = "${data.terraform_remote_state.vpc.vpc_id}"
+    enable_stickiness              = "Yes"
+    health_check_interval          = "30"
+    health_check_path              = "/operations/health"
+    health_check_protocol          = "HTTP"
+    health_check_timeout           = "5"
+    health_check_healthy_threshold = "5"
+    unhealthy_threshold            = "2"
+    matcher                        = "200-299"
+    load_balancer_arn              = "${data.terraform_remote_state.alb.alb_arn}"
+
 }
