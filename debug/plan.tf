@@ -68,3 +68,11 @@ module "ecs" {
     cluster_scaled_down_desired_size = "0"
     cluster_scaled_down_max_size     = "0"
 }
+
+output "arn" {
+    value = "${module.ecs.arn}"
+}
+
+output "status" {
+    value = "${module.ecs.status}"
+}
