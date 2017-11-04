@@ -69,10 +69,10 @@ module "ecs" {
     cluster_scaled_down_max_size     = "0"
 }
 
-output "arn" {
-    value = "${module.ecs.arn}"
+output "cluster_arn" {
+    value = "${module.ecs.cluster_arn}"
 }
 
-output "status" {
-    value = "${module.ecs.status}"
+output "cluster_name" {
+    value = "${module.ecs.cluster_name}"
 }

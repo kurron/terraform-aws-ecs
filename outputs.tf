@@ -1,9 +1,9 @@
-output "arn" {
-    value = ["${aws_ecs_cluster.main.arn}"]
-    description = "The ARN of the ECS Cluster"
+output "cluster_arn" {
+    value = "${aws_ecs_cluster.main.id}"
+    description = "The Amazon Resource Name (ARN) that identifies the cluster"
 }
 
-output "status" {
-    value = ["${aws_ecs_cluster.main.status}"]
-    description = "The status of the ECS Cluster"
+output "cluster_name" {
+    value = "${aws_ecs_cluster.main.name}"
+    description = "The name of the cluster"
 }
